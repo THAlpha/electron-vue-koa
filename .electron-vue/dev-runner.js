@@ -69,6 +69,13 @@ function startRenderer () {
           ctx.middleware.waitUntilValid(() => {
             resolve()
           })
+        },
+        proxy: {
+          '/api': {
+            target: 'http://localhost:3333',
+            secure: false,
+            changeOrigin: true
+          }
         }
       }
     )
@@ -127,7 +134,7 @@ function startElectron () {
   }
 
   electronProcess = spawn(electron, args)
-  
+
   electronProcess.stdout.on('data', data => {
     electronLog(data, 'blue')
   })

@@ -1,4 +1,5 @@
 import { app, BrowserWindow } from 'electron'
+const portscanner = require('portscanner');
 
 /**
  * Set `__static` path to static files in production
@@ -6,6 +7,13 @@ import { app, BrowserWindow } from 'electron'
  */
 if (process.env.NODE_ENV !== 'development') {
   global.__static = require('path').join(__dirname, '/static').replace(/\\/g, '\\\\')
+
+    portscanner.findAPortNotInUse(3000, 4000)
+      .then(port => {
+        process.env.PORT = process.env.PORT || port;
+        global.API_URL_PREFIX = (process.env.PORT ? `http://localhost:${process.env.PORT}/api` : '/api');
+        require('./server.js');
+      });
 }
 
 let mainWindow
