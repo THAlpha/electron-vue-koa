@@ -1,7 +1,6 @@
 'use strict'
 
 process.env.BABEL_ENV = 'main'
-process.env.API_URL_PREFIX = (process.env.PORT ? `http://localhost:${process.env.PORT}/api` : '/api');
 
 const path = require('path')
 const { dependencies } = require('../package.json')
